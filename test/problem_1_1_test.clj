@@ -1,6 +1,6 @@
-(ns problem-1-test
+(ns problem-1-1-test
   (:require [clojure.test :refer :all])
-  (:require [problem-1 :refer :all]
+  (:require [problem-1-1 :refer :all]
             [clojure.string :as str]))
 
 (deftest describe:read-string
@@ -20,20 +20,20 @@
     )
   )
 
-(deftest describe:solve-1
-  "solve-1 함수는"
-  (testing "주어진 텍스트를 읽어 포함된 숫자 값들의 합을 리턴한다."
-    (is (= 6 (solve-1
-               "+1
-               +2
-               +3")))
-    (is (= 11 (solve-1
-               "+10
-               -2
-               +3")))
-    (is (= -99 (solve-1
-                "-100
-                -2
-                +3")))
-    )
-  )
+(deftest describe:solve-1-1
+  "solve-1-1 함수는"
+  (let [subject solve-1-1]
+    (testing "주어진 텍스트를 읽어 포함된 숫자 값들의 합을 리턴한다."
+      (is (= 6 (subject
+                 "+1
+                 +2
+                 +3")))
+      (is (= 11 (subject
+                  "+10
+                  -2
+                  +3")))
+      (is (= -99 (subject
+                   "-100
+                   -2
+                   +3")))
+      )))
