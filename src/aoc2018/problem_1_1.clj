@@ -1,8 +1,8 @@
-(ns problem-1-1
+(ns aoc2018.problem-1-1
   (:require [clojure.java.io :as io]
             [clojure.string :as str]))
 
-(def data-file (-> "input1.txt" (io/resource) (slurp)))
+(def data-file (-> "aoc2018/input1.txt" (io/resource) (slurp)))
 
 (defn to-numbers [input-text]
   "주어진 문자열을 개행문자를 기준으로 분리한 숫자들의 리스트로 변환해 리턴합니다."

@@ -1,6 +1,6 @@
-(ns problem-1-1-test
+(ns aoc2018.problem-1-1-test
   (:require [clojure.test :refer :all])
-  (:require [problem-1-1 :refer :all]
+  (:require [aoc2018.problem-1-1 :refer :all]
             [clojure.string :as str]))
 
 (deftest describe:read-string
