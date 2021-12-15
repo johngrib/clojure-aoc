@@ -38,3 +38,8 @@
                    +3"))))
     (testing "https://adventofcode.com/2018/day/1/input 에 제시된 입력이 주어지면 484 를 리턴한다."
       (is (-> data-file (subject) (= 484))))))
+
+(comment
+  (run-tests)
+  (run-all-tests)
+  )

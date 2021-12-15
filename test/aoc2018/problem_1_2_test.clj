@@ -27,3 +27,6 @@
     )
   )
 
+(comment
+  (run-tests)
+  )
