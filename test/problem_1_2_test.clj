@@ -1,6 +1,6 @@
 (ns problem-1-2-test
   (:require [clojure.test :refer :all])
-  (:use [problem-1-1])
+  (:require [problem-1-1])
   (:require [problem-1-2 :refer :all]))
 
 (deftest describe:solve-1-2
@@ -20,7 +20,7 @@
     )
   (testing "https://adventofcode.com/2018/day/1 의 part2 정답을 리턴한다"
     "문제 1-2의 정답은 367"
-    (is (= 367 (solve-1-2 (cycle (to-numbers data-file)))))
+    (is (= 367 (solve-1-2 (cycle (problem-1-1/to-numbers problem-1-1/data-file)))))
     )
   )
 
