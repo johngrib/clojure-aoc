@@ -1,8 +1,7 @@
 (ns problem-1-2-test
   (:require [clojure.test :refer :all])
   (:use [problem-1-1])
-  (:require [problem-1-2 :refer :all]
-            [clojure.string :as str]))
+  (:require [problem-1-2 :refer :all]))
 
 (deftest describe:solve-1-2
   "solve-1-2 함수"

@@ -1,8 +1,5 @@
 (ns problem-1-2
-  (:require [clojure.java.io :as io]
-            [clojure.string :as str])
-  (:use [problem-1-1])
-  )
+  (:use [problem-1-1]))
 
 (defn solve-1-2
   "주어진 숫자열을 순서대로 덧셈하다 처음으로 두 번째로 나오는 수를 리턴합니다.
