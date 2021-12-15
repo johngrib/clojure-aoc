@@ -13,10 +13,13 @@
       -6, +3, +8, +5, -6 first reaches 5 twice.
       +7, +7, -2, -7, -4 first reaches 14 twice.
     "
-    (is (= 0 (solve-1-2 (cycle [+1 -1]))))
-    (is (= 10 (solve-1-2 (cycle [+3 +3 +4 -2 -4]))))
-    (is (= 5 (solve-1-2 (cycle [-6, +3, +8, +5, -6]))))
-    (is (= 14 (solve-1-2 (cycle [+7, +7, -2, -7, -4]))))
+    (are [expect result]
+      (= expect result)
+      0 (solve-1-2 (cycle [+1 -1]))
+      10 (solve-1-2 (cycle [+3 +3 +4 -2 -4]))
+      5 (solve-1-2 (cycle [-6, +3, +8, +5, -6]))
+      14 (solve-1-2 (cycle [+7, +7, -2, -7, -4]))
+      )
     )
   (testing "https://adventofcode.com/2018/day/1 의 part2 정답을 리턴한다"
     "문제 1-2의 정답은 367"
