@@ -39,8 +39,8 @@ https://adventofcode.com/2018/day/3
      :x      (-> codes (nth 2) read-string)
      :y      (-> codes (nth 3) read-string)
      :width  (-> codes (nth 4) read-string)
-     :height (-> codes (nth 5) read-string)
-     }))
+     :height (-> codes (nth 5) read-string)}))
+
 
 (defn expand-code-map [code-map]
   "주어진 위치정보를 확장해 좌표들의 리스트로 만들어 리턴합니다."
@@ -52,11 +52,11 @@ https://adventofcode.com/2018/day/3
 
         start-y (c :y)
         end-y (+ start-y (c :height))
-        row (range start-y end-y)
-        ]
+        row (range start-y end-y)]
+
     (for [x column, y row]
-      {:x x :y y}
-      )))
+      {:x x :y y})))
+
 
 (defn solve-3-1 [input-strings]
   (->> input-strings
@@ -66,6 +66,6 @@ https://adventofcode.com/2018/day/3
        frequencies
        vals
        (filter #(> % 1))
-       count
-       )
-  )
+       count))
+
+
