@@ -58,12 +58,17 @@ https://adventofcode.com/2018/day/3
     (for [x column, y row]
       {:id id, :x x, :y y})))
 
-
-(defn solve-3-1 [input-strings]
+(defn collect-all-dots [input-strings]
+  "주어진 코드를 읽고, 생성 가능한 모든 점의 리스트를 리턴합니다"
   (->> input-strings
        (map to-location-code)
        (map expand-code-map)
-       (reduce into)
+       (reduce into)))
+
+(defn solve-3-1 [input-strings]
+  "https://adventofcode.com/2018/day/3 문제를 풀이하여 답을 리턴합니다"
+  (->> input-strings
+       collect-all-dots
        (map #(dissoc % :id))
        frequencies
        vals
