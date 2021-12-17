@@ -16,14 +16,14 @@
 
 (deftest description:expand-code-map
   "expand-code-map 함수는"
-  (testing "위치정보 객체를 좌표의 리스트로 확장해 리턴합니다."
+  (testing "위치정보 객체를 id를 포함하는 좌표의 리스트로 확장해 리턴합니다."
     (are [code-map expect]
       (= (expand-code-map code-map) expect)
       {:id 6, :x 8, :y 3, :width 2, :height 3}
-      [{:x 8, :y 3} {:x 8, :y 4} {:x 8, :y 5} {:x 9, :y 3} {:x 9, :y 4} {:x 9, :y 5}]
+      [{:id 6, :x 8, :y 3} {:id 6, :x 8, :y 4} {:id 6, :x 8, :y 5} {:id 6, :x 9, :y 3} {:id 6, :x 9, :y 4} {:id 6, :x 9, :y 5}]
 
       {:id 2, :x 1, :y 10, :width 2, :height 2}
-      [{:x 1, :y 10} {:x 1, :y 11} {:x 2, :y 10} {:x 2, :y 11}]
+      [{:id 2, :x 1, :y 10} {:id 2, :x 1, :y 11} {:id 2, :x 2, :y 10} {:id 2, :x 2, :y 11}]
       )))
 
 (deftest describe:solve-3-1

@@ -46,6 +46,7 @@ https://adventofcode.com/2018/day/3
   "주어진 위치정보를 확장해 좌표들의 리스트로 만들어 리턴합니다."
   (let [
         c code-map
+        id (c :id)
         start-x (c :x)
         end-x (+ start-x (c :width))
         column (range start-x end-x)
@@ -55,7 +56,7 @@ https://adventofcode.com/2018/day/3
         row (range start-y end-y)]
 
     (for [x column, y row]
-      {:x x :y y})))
+      {:id id, :x x, :y y})))
 
 
 (defn solve-3-1 [input-strings]
@@ -63,9 +64,9 @@ https://adventofcode.com/2018/day/3
        (map to-location-code)
        (map expand-code-map)
        (reduce into)
+       (map #(dissoc % :id))
        frequencies
        vals
        (filter #(> % 1))
        count))
-
 
