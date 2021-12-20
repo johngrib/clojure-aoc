@@ -25,7 +25,7 @@ https://adventofcode.com/2018/day/3
   "주어진 점들의 리스트에서 중복된 위치를 가진 점들을 수집해 리턴합니다."
   (as-> dots v
         (group-by (juxt :x :y) v)
-        (for [[key value] v :when (< 1 (count value))] value)
+        (for [[_ value] v :when (< 1 (count value))] value)
         (reduce into v)))
 
 (defn solve-3-2 [input-strings]
