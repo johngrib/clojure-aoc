@@ -12,5 +12,3 @@
     (is (= 73001 (:solution (solve-4-2 input-strings))))))
 
 (comment (run-tests))
-
-

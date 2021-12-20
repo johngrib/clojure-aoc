@@ -24,24 +24,20 @@ https://adventofcode.com/2018/day/4 part2
   [raw-strings]
   (let [
         날짜별-로그-리스트 (simplify-logs raw-strings)
-        날짜별-수면-기록 (map #(conj % {:minutes (range (:sleep %) (:wake %))}) 날짜별-로그-리스트)
+        날짜별-수면-기록 (map #(assoc % :minutes (range (:sleep %) (:wake %))) 날짜별-로그-리스트)
         경비원별-수면-기록 (group-by :guard-id
                              (map #(select-keys % [:guard-id :minutes]) 날짜별-수면-기록))
         경비원별-가장-많이-잠들었던-분 (map (fn [[guard-id v]]
-                                 (conj
+                                 (merge
                                    {:guard-id guard-id}
                                    (most-of (reduce into (map #(:minutes %) v)))))
                                경비원별-수면-기록)
         정답-대상자 (last (sort-by :frequency 경비원별-가장-많이-잠들었던-분))]
 
-    (conj 정답-대상자 {:solution (* (:guard-id 정답-대상자) (:value 정답-대상자))})))
+    (merge 정답-대상자 {:solution (* (:guard-id 정답-대상자) (:value 정답-대상자))})))
 
 (comment
   ; 4455
   (solve-4-2 sample-input-string)
   ; 73001
   (solve-4-2 input-strings))
-
-
-
-
