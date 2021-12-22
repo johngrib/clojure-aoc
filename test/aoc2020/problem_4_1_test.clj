@@ -11,7 +11,7 @@
 (deftest describe:to-passport
   "to-passport 함수는"
   (testing "여권 데이터를 표현하는 문자열을 받아 여권 map으로 변환해 리턴합니다."
-    (= (to-passport "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd\nbyr:1937 iyr:2017 cid:147 hgt:183cm")
+    (= (string->passport "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd\nbyr:1937 iyr:2017 cid:147 hgt:183cm")
        {:ecl "gry", :pid "860033327", :eyr 2020, :hcl "#fffffd", :byr 1937, :iyr 2017, :cid 147, :hgt {:height 183, :unit "cm"}})
     ))
 

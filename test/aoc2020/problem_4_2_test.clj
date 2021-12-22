@@ -3,12 +3,6 @@
             [aoc2020.problem-4-2 :refer :all]
             [clojure.java.io :as io]))
 
-(deftest describe:not-nil?
-  (testing
-    (is (true? (not-nil? 1)))
-    (is (true? (not-nil? [])))
-    (is (false? (not-nil? nil)))))
-
 (deftest describe:number-string?
   (testing
     (is (true? (number-string? "1234")))
