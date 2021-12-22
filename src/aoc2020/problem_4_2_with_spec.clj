@@ -31,7 +31,7 @@
                        #(re-matches #"^\d{9}$" %)))
 (s/def :passport/cid (constantly true))
 
-(s/def :unq/passport (s/keys :req-un [:passport/byr
+(s/def ::passport (s/keys :req-un [:passport/byr
                                       :passport/iyr
                                       :passport/eyr
                                       :passport/hgt
@@ -45,7 +45,7 @@
   [input-string]
   (->> (str/split input-string #"\n\n+")
        (map string->passport)
-       (filter #(s/valid? :unq/passport %))
+       (filter #(s/valid? ::passport %))
        count))
 
 (comment
