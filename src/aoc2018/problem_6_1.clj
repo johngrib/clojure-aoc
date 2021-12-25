@@ -87,7 +87,7 @@ https://adventofcode.com/2018/day/6 part1
   (fn [{x :x, y :y}]
     (or (<= x min-x) (>= x max-x) (<= y min-y) (>= y max-y))))
 
-(defn- -select
+(defn select
   "coll 컬렉션에서 key-word 값을 매핑한 다음, f1 함수를 적용한 결과를 리턴합니다."
   [f1 key-word coll]
   (->> coll
@@ -101,10 +101,10 @@ https://adventofcode.com/2018/day/6 part1
   (let [
         king-dots (input->dots input-string)
 
-        min-x (-select min :x king-dots)
-        max-x (-select max :x king-dots)
-        min-y (-select min :y king-dots)
-        max-y (-select max :y king-dots)
+        min-x (select min :x king-dots)
+        max-x (select max :x king-dots)
+        min-y (select min :y king-dots)
+        max-y (select max :y king-dots)
         x-좌표들 (range min-x (inc max-x))
         y-좌표들 (range min-y (+ 1 max-y))
 
