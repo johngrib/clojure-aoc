@@ -43,25 +43,23 @@ dabCBAcaDA        No further actions can be taken.
   "polymer unit을 연쇄반응하는데 사용할 reducer 함수를 리턴합니다.
   stack을 사용해 문제를 풀이합니다."
   ([]
-   "polymer unit 리스트의 끝에 새로운 polymer unit을 반응시키고, 반응의 결과 리스트를 리턴합니다."
+   ; polymer unit 리스트의 끝에 새로운 polymer unit을 반응시키고, 반응의 결과 리스트를 리턴합니다.
    (react-polymer-reducer #{nil}))
   ([무시할-문자-set]
-   "polymer unit 리스트의 끝에 새로운 polymer unit을 반응시키고(특정 문자들은 무시합니다), 반응의 결과 리스트를 리턴합니다."
-   (fn react-polymer
-     ([stack 다음-문자]
-      (let [stack의-마지막-문자 (peek stack)]
-        (cond
-          (무시할-문자-set 다음-문자) stack
-          (pair-alphabet? stack의-마지막-문자 다음-문자) (pop stack)
-          :else (conj stack 다음-문자)))))))
+   ; polymer unit 리스트의 끝에 새로운 polymer unit을 반응시키고(특정 문자들은 무시합니다), 반응의 결과 리스트를 리턴합니다.
+   (fn [stack 다음-문자]
+     (let [stack의-마지막-문자 (peek stack)]
+       (cond
+         (무시할-문자-set 다음-문자) stack
+         (pair-alphabet? stack의-마지막-문자 다음-문자) (pop stack)
+         :else (conj stack 다음-문자))))))
 
 (defn solve-5-1
   "https://adventofcode.com/2018/day/5 문제의 답을 풀이한 결과를 리턴합니다.
   주어진 문자열을 polymer units list로 인식하여, 연쇄 반응을 시킨 결과를 리턴합니다."
   [polymer-string]
   (let [
-        입력-문자-리스트 (seq polymer-string)
-        결과-문자-리스트 (reduce (react-polymer-reducer) [] 입력-문자-리스트)]
+        결과-문자-리스트 (reduce (react-polymer-reducer) [] polymer-string)]
     (println (apply str 결과-문자-리스트))
     (count 결과-문자-리스트)))
 
