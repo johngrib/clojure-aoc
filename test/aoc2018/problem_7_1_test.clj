@@ -7,7 +7,8 @@
     (is (= (string->work-context sample-input-string)
            {:root-works     [\C],
             :required-works {\A #{\C}, \F #{\C}, \B #{\A}, \D #{\A}, \E #{\B \D \F}},
-            :next-works     {\C #{\A \F}, \A #{\B \D}, \B #{\E}, \D #{\E}, \F #{\E}}}))))
+            :next-works     {\C #{\A \F}, \A #{\B \D}, \B #{\E}, \D #{\E}, \F #{\E}}
+            :all-works      #{\A \B \C \D \E \F}}))))
 
 (deftest desc:solve-7-1
   (testing "예제 입력이 주어지면 예제 해답을 리턴한다."

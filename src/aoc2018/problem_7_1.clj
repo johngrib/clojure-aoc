@@ -1,5 +1,7 @@
 (ns aoc2018.problem-7-1
-  (:require [clojure.java.io :as io]))
+  (:require [clojure.java.io :as io]
+            [clojure.set :as cset]
+            ))
 
 (comment "
 https://adventofcode.com/2018/day/7 문제 part1
@@ -48,7 +50,7 @@ C 부터 시작해서 E 까지 작업을 완료하는 단계를 문자열로 표
 (defn collect-root-works
   "선행 필수 작업이 없어 가장 먼저 실행 가능한 작업들의 리스트를 리턴합니다."
   [input-works]
-  (->> (clojure.set/difference
+  (->> (cset/difference
          (->> input-works (map first) (into #{}))
          (->> input-works (map last) (into #{})))
        (into [])))
@@ -83,7 +85,7 @@ C 부터 시작해서 E 까지 작업을 완료하는 단계를 문자열로 표
                          ; 이 작업이 이미 끝난 작업이면 안된다.
                          (not (finished-works x))
                          ; 이 작업의 선행 필수 작업들이 이미 끝나있어야 한다.
-                         (empty? (clojure.set/difference (required-work-data x) finished-works)))))
+                         (empty? (cset/difference (required-work-data x) finished-works)))))
        sort))
 
 (comment
