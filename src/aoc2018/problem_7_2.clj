@@ -16,10 +16,10 @@
   (->> (range 65 91)
        (map char)
        (map-indexed (fn [idx char] {char (+ idx A-time)}))
-       (reduce into {})))
+       (into {})))
 
-(comment (work-required-times 60)                           ; 예제 풀이용
-         (work-required-times 0))                           ; 본 문제 풀이용
+(comment (work-required-times 61)                           ; 본 문제 풀이용
+         (work-required-times 1))                           ; 예제 문제 풀이용
 
 (defn create-workers
   "워커 리스트를 생성해 리턴합니다."
@@ -56,7 +56,7 @@
   [timestamp workers]
   (->> workers
        (filter #(finished-worker? % timestamp))
-       (map #(:work-in-progress %))
+       (map :work-in-progress)
        sort))
 
 (comment (collect-finished-works 30 [{:work-in-progress \A, :time-to-finish 30},
@@ -131,7 +131,7 @@
                       \Z 6 70))
 
 (defn assign-work-to-idle-workers
-  "주어진 작업을 놀고 있는 워커들에게 할당해줍니다.
+  "주어진 작업들을 놀고 있는 워커들에게 할당해줍니다.
 
   timestamp: 현재 타임스탬프
   works: 워커들에게 할당해줄 작업들
@@ -171,8 +171,7 @@
   "여러 워커들이 진행중인 작업들 중 가장 먼저 끝나는 작업의 완료 시각을 리턴합니다."
   [workers]
   (->> workers
-       (map #(:time-to-finish %))
-       (filter some?)
+       (keep :time-to-finish)
        sort
        first))
 
@@ -182,9 +181,8 @@
   [input-string, worker-count, time-adjust]
   (let [work-times (work-required-times time-adjust)
         work-context (string->work-context input-string)
-        {root-works     :root-works
-         required-works :required-works
-         all-works      :all-works} work-context]
+        {:keys [required-works
+                all-works]} work-context]
 
     (loop [timestamp 0
            workers (create-workers worker-count)
@@ -203,7 +201,7 @@
             ; 진행중인 작업들 중 가장 빨리 끝나는 시간으로 시간을 흘려보낸다.
             next-time (get-closest-finish-time assigned-workers)]
 
-        #_#_#_#_(println)
+        (println)
         (println "timestamp: " timestamp)
         (println "완료된 작업: " new-finished-works)
         (println "workers: \n" (str/replace (str assigned-workers) #"\}" "}\n"))
