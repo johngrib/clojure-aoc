@@ -22,13 +22,12 @@ https://adventofcode.com/2020/day/1  part 1
                        string->numbers))
 
 (defn solve-1-1 [numbers target-sum]
-  (loop [combinations (for [x numbers y numbers] [x y])]
-    (let [candidates (first combinations)
-          sum (apply + candidates)]
-      (if (= target-sum sum)
-        {:numbers  (set candidates)
-         :multiple (apply * candidates)}
-        (recur (rest combinations))))))
+  (let [[found-numbers] (for [x numbers
+                              y numbers
+                              :when (= target-sum (+ x y))]
+                          #{x y})]
+    {:numbers  found-numbers
+     :multiple (apply * found-numbers)}))
 
 (comment
   (solve-1-1 sample-input-numbers 2020)                     ; {:numbers [1721 299], :multiple 514579}
