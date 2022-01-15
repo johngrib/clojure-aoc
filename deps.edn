@@ -5,5 +5,4 @@
  :aliases {:test    {:extra-paths ["test"]
                      :extra-deps  {cloverage/cloverage {:mvn/version "1.2.2"}}
                      :main-opts   ["-m" "cloverage.coverage"
-                                   "-p" "src" "-s" "test"]}}
- }
+                                   "-p" "src" "-s" "test"]}}}
