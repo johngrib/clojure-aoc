@@ -21,15 +21,17 @@ https://adventofcode.com/2018/day/3
 겹치지 않는 영역을 가진 ID를 출력하시오. (문제에서 답이 하나만 나옴을 보장함)
 ")
 
-(defn collect-duplicated-dots [dots]
+(defn collect-duplicated-dots
   "주어진 점들의 리스트에서 중복된 위치를 가진 점들을 수집해 리턴합니다."
+  [dots]
   (as-> dots v
         (group-by (juxt :x :y) v)
         (for [[_ value] v :when (< 1 (count value))] value)
         (reduce into v)))
 
-(defn solve-3-2 [input-strings]
+(defn solve-3-2
   "https://adventofcode.com/2018/day/3 의 답을 리턴한다"
+  [input-strings]
   (let [
         all-dots (problem/collect-all-dots input-strings)
         all-id (set (for [i all-dots] (i :id)))

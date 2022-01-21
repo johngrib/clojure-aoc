@@ -11,10 +11,11 @@ https://adventofcode.com/2020/day/8  part 2
 명령 하나를 수정해서 프로그램이 끝까지 실행되었을 시점의 누산기의 값이 정답입니다.
 ")
 
-(defn swaper [swap-dictionary]
+(defn swaper
   "swap 매핑 데이터를 받아, 명령 리스트에서 특정 명령의 op code를 스왑해주는 함수를 생성해 리턴합니다.
   생성된 함수는
   명령 리스트를 입력받아, 하나의 op code를 변경합니다."
+  [swap-dictionary]
   (fn [operation-id operation-list]
     (let [
           head (take operation-id operation-list)

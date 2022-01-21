@@ -25,8 +25,9 @@ part1 문제에 추가로 각 필드별 유효조건이 붙었다.
 모든 필드의 조건을 만족하는 여권들의 수가 문제의 답이다.
 ")
 
-(defn number-string? [str]
+(defn number-string?
   "숫자 형식의 문자열이면 true, 그 외의 경우는 false를 리턴합니다."
+  [str]
   (and
     (string? str)
     (some? (re-find #"^-?\d+$" str))))
@@ -35,8 +36,9 @@ part1 문제에 추가로 각 필드별 유효조건이 붙었다.
   (number-string? "123")
   (number-string? nil))
 
-(defn valid-height? [hgt-string]
+(defn valid-height?
   "주어진 문자열이 올바른 신장을 표현한다면 true, 그렇지 않다면 false를 리턴합니다."
+  [hgt-string]
   (let [[_ height unit] (re-find #"^(\d+)(in|cm)?$" hgt-string)]
     (if (or (nil? height) (nil? unit))                      ; (and height unit)
       false
@@ -73,18 +75,20 @@ part1 문제에 추가로 각 필드별 유효조건이 붙었다.
          #(re-find #"^\d{9}$" %)]
    :cid [(constantly true)]})
 
-(defn check [checker-list value]
+(defn check
   "검증함수 리스트를 순회하며 값을 검증합니다.
    검증에 실패하면 short-circuit으로 false를 리턴하며, 모든 검증에 성공하면 true를 리턴합니다."
+  [checker-list value]
   (let [checker (first checker-list)]
     (cond
       (empty? checker-list) true
       (checker value) (recur (rest checker-list) value)
       :else false)))
 
-(defn validate-passport [passport]
+(defn validate-passport
   "여권 정보를 검사하여, invalid한 값이 있는 경우 :invalid-keys 필드와 값을 추가한 여권 정보를 리턴합니다.
   :invalid-keys 는 set 으로 주어지며, 검증에 실패한 키값들이 수집됩니다."
+  [passport]
   (let [invalid-keys (->> validator
                           (keep (fn [[key checker-list]]
                                   (when-not (check checker-list (key passport)) key))) ; keep is friend with when

@@ -42,8 +42,9 @@ https://adventofcode.com/2018/day/3
      :height (-> codes (nth 5) read-string)}))
 
 
-(defn expand-code-map [code-map]
+(defn expand-code-map
   "주어진 위치정보를 확장해 좌표들의 리스트로 만들어 리턴합니다."
+  [code-map]
   (let [
         c code-map
         id (c :id)
@@ -58,15 +59,17 @@ https://adventofcode.com/2018/day/3
     (for [x column, y row]
       {:id id, :x x, :y y})))
 
-(defn collect-all-dots [input-strings]
+(defn collect-all-dots
   "주어진 코드를 읽고, 생성 가능한 모든 점의 리스트를 리턴합니다"
+  [input-strings]
   (->> input-strings
        (map to-location-code)
        (map expand-code-map)
        (reduce into)))
 
-(defn solve-3-1 [input-strings]
+(defn solve-3-1
   "https://adventofcode.com/2018/day/3 문제를 풀이하여 답을 리턴합니다"
+  [input-strings]
   (->> input-strings
        collect-all-dots
        (map #(dissoc % :id))

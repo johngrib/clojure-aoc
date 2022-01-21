@@ -16,8 +16,9 @@ Part 1. 주어진 입력의 모든 숫자를 더하시오.
 
 (def data-file (-> "aoc2018/input1.txt" io/resource slurp))
 
-(defn to-numbers [input-text]
+(defn to-numbers
   "주어진 문자열을 개행문자를 기준으로 분리한 숫자들의 리스트로 변환해 리턴합니다."
+  [input-text]
   (map read-string (str/split-lines input-text)))
 
 (defn solve-1-1
