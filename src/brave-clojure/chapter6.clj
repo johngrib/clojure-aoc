@@ -1,4 +1,5 @@
 (ns brave-clojure.chapter6
+  "https://www.braveclojure.com/organization/"
   (:require [clojure.string :as s])
   (:refer-clojure :exclude [min max]))
 
