@@ -130,7 +130,8 @@
                  (map vampire-related-details
                       social-security-numbers))))
 
-(time (vampire-related-details 0))
+(comment
+  (time (vampire-related-details 0)))
 
 (comment
   (time (vampire-related-details 0))

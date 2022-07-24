@@ -1,6 +1,7 @@
 (ns brave-clojure.chapter9
   "https://www.braveclojure.com/concurrency/")
 
+(comment
 (future (Thread/sleep 4000)
         (println "I'll print after 4 seconds"))
 (println "I'll print immediately")
@@ -185,3 +186,5 @@
 ; Cheerio!
 ; "Elapsed time: 402.322875 msecs"
 ; "Cheerio!"
+
+)

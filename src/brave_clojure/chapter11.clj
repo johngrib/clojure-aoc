@@ -134,10 +134,12 @@ alts!! 를 쓰면 주어진 밀리 초 단위 시간 동안 대기하다가 clos
 (def in-chan (chan))
 (def upper-caser-out (upper-caser in-chan))
 (def reverser-out (reverser upper-caser-out))
-(printer reverser-out)
 
-(>!! in-chan "redrum")
-; MURDER
-(>!! in-chan "repaid")
-; DIAPER
+(comment
+  (printer reverser-out)
 
+  (>!! in-chan "redrum")
+  ; MURDER
+  (>!! in-chan "repaid")
+  ; DIAPER
+  )
