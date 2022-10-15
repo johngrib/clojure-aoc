@@ -1,6 +1,10 @@
 {
  :paths ["src" "resources"]
- :deps {org.clojure/core.async {:mvn/version "1.5.648"}}
+ :deps {org.clojure/core.async {:mvn/version "1.5.648"}
+        org.clojure/data.json  {:mvn/version "2.4.0"}
+        clj-http/clj-http      {:mvn/version "3.12.3"}
+        cheshire/cheshire      {:mvn/version "5.11.0"}
+        }
  ;; clj -M:test
  :aliases {:test    {:extra-paths ["test"]
                      :extra-deps  {cloverage/cloverage {:mvn/version "1.2.2"}}
