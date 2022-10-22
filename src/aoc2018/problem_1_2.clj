@@ -28,4 +28,20 @@ Part 2. 주어진 입력의 숫자를 더할 때마다 나오는 숫자 중, 처
         (rest numbers)
         next-sum
         (conj number-set next-sum)))))
-  ([numbers] (solve-1-2 numbers 0 #{0})))
+  ([numbers] (solve-1-2 (cycle numbers) 0 #{0})))
+
+(defn solve-1-2:loop
+  "loop를 사용해 해결"
+  [numbers]
+  (loop [sum-cache #{0}
+         sum 0
+         number-source (cycle numbers)]
+    (let [next-sum (+ sum (first number-source))]
+      (if (sum-cache next-sum)
+        next-sum
+        (recur (conj sum-cache next-sum)
+               next-sum
+               (rest number-source))))))
+
+(comment
+  (solve-1-2:loop [+1 -1]))
