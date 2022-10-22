@@ -43,5 +43,19 @@ Part 2. 주어진 입력의 숫자를 더할 때마다 나오는 숫자 중, 처
                next-sum
                (rest number-source))))))
 
+(defn solve-1-2:reduce
+  "reduce를 사용해 해결"
+  [numbers]
+  (->> (cycle numbers)
+       (reduce (fn [{:keys [sum-cache sum]} number]
+                 (let [next-sum (+ sum number)]
+                   (if (sum-cache next-sum)
+                     (reduced next-sum)
+                     {:sum       next-sum
+                      :sum-cache (conj sum-cache next-sum)})))
+               {:sum       0
+                :sum-cache #{0}})))
+
+
 (comment
-  (solve-1-2:loop [+1 -1]))
+  (solve-1-2:reduce [+1 -1]))

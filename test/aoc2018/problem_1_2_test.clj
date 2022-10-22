@@ -1,7 +1,7 @@
 (ns aoc2018.problem-1-2-test
   (:require [clojure.test :refer [deftest testing are run-tests is]]
             [aoc2018.problem-1-1 :as problem]
-            [aoc2018.problem-1-2 :refer [solve-1-2 solve-1-2:loop]]))
+            [aoc2018.problem-1-2 :refer [solve-1-2 solve-1-2:loop solve-1-2:reduce]]))
 
 (deftest describe:solve-1-2
   (testing "solve-1-2"
@@ -15,7 +15,8 @@
       "
       (are [expect-result input-list]
            (= expect-result (solve-1-2 input-list)
-                            (solve-1-2:loop input-list))
+                            (solve-1-2:loop input-list)
+                            (solve-1-2:reduce input-list))
         0 [+1 -1]
         10 [+3 +3 +4 -2 -4]
         5 [-6, +3, +8, +5, -6]
