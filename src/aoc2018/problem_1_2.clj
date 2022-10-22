@@ -25,9 +25,7 @@ Part 2. 주어진 입력의 숫자를 더할 때마다 나오는 숫자 중, 처
        ; return
        next-sum
        (recur
-         (rest numbers)
-         next-sum
-         (conj number-set next-sum))
-       )))
-  ([numbers] (solve-1-2 numbers 0 #{0}))
-  )
+        (rest numbers)
+        next-sum
+        (conj number-set next-sum)))))
+  ([numbers] (solve-1-2 numbers 0 #{0})))
