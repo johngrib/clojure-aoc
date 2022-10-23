@@ -20,7 +20,9 @@ wvxyz
 정답: fgij
 ")
 
-(def data-file (-> "aoc2018/input2.txt" (io/resource) (slurp)))
+(def data-file (-> "aoc2018/input2.txt"
+                   io/resource
+                   slurp))
 (def input-strings (str/split-lines data-file))
 
 (defn collect-intersection
@@ -30,21 +32,17 @@ wvxyz
         :let [char1 (get list1 index),
               char2 (get list2 index)]
         :when (= char1 char2)]
-    char1)
-  )
+    char1))
 
 (defn analyze-two-string
   " 두 문자열을 받아 분석한 결과를 리턴합니다 "
   [string1 string2]
   (when-not (= string1 string2)
     (let [intersection (collect-intersection string1 string2)]
-      {
-       :string1             string1
+      {:string1             string1
        :string2             string2
        :mismatch-count      (- (count string1) (count intersection))
-       :intersection-string (str/join intersection)
-       }
-      )))
+       :intersection-string (str/join intersection)})))
 
 (defn solve-2-2
   [string-list]
@@ -56,7 +54,6 @@ wvxyz
        (filter #(= 1 (% :mismatch-count)))
        (map #(% :intersection-string))
        distinct
-       first
-       ))
+       first))
 
 
