@@ -26,35 +26,36 @@ https://adventofcode.com/2018/day/3
 겹치는 지역의 갯수를 출력하시오. (위의 예시에서는 4)
 ")
 
-(def data-file (-> "aoc2018/input3.txt" io/resource slurp))
+(def data-file (-> "aoc2018/input3.txt"
+                   io/resource
+                   slurp))
 (def input-strings (str/split-lines data-file))
 
 (defn to-location-code
   "문제에서 정의한 형식의 코드 한 줄을 받아 위치정보로 변환해 리턴합니다."
   [raw-code]
   ;                        id      x     y      width height
-  (let [codes (re-find #"#(\d+) @ (\d+),(\d+): (\d+)x(\d+)" raw-code)]
+  (let [[_ id x y width height] (re-find #"#(\d+) @ (\d+),(\d+): (\d+)x(\d+)" raw-code)]
     {
-     :id     (-> codes (nth 1) read-string)
-     :x      (-> codes (nth 2) read-string)
-     :y      (-> codes (nth 3) read-string)
-     :width  (-> codes (nth 4) read-string)
-     :height (-> codes (nth 5) read-string)}))
+     :id     (parse-long id)
+     :x      (parse-long x)
+     :y      (parse-long y)
+     :width  (parse-long width)
+     :height (parse-long height)}))
 
 
 (defn expand-code-map
   "주어진 위치정보를 확장해 좌표들의 리스트로 만들어 리턴합니다."
   [code-map]
-  (let [
-        c code-map
-        id (c :id)
+  (let [c       code-map
+        id      (c :id)
         start-x (c :x)
-        end-x (+ start-x (c :width))
-        column (range start-x end-x)
+        end-x   (+ start-x (c :width))
+        column  (range start-x end-x)
 
         start-y (c :y)
-        end-y (+ start-y (c :height))
-        row (range start-y end-y)]
+        end-y   (+ start-y (c :height))
+        row     (range start-y end-y)]
 
     (for [x column, y row]
       {:id id, :x x, :y y})))
