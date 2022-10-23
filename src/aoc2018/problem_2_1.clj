@@ -22,16 +22,23 @@ ababab (세 번 나오는 문자: a, b)
   세 번 나타난 문자가 있는 문자열의 수: 3 개
   답 : 4 * 3 = 12
 ")
-(def data-file (-> "aoc2018/input2.txt" (io/resource) (slurp)))
+
+(def data-file (-> "aoc2018/input2.txt"
+                   io/resource
+                   slurp))
 (def input-strings (str/split-lines data-file))
 
 (defn solve-2-1
   [string-list]
-  (let [
-        count-candidates (->> string-list (map frequencies) (map vals) (map set))
-        two-times (->> count-candidates (filter #(% 2)) (count))
-        three-times (->> count-candidates (filter #(% 3)) (count))
-        ]
+  (let [count-candidates (->> string-list
+                              (map frequencies)
+                              (map vals)
+                              (map set))
+        two-times (->> count-candidates
+                       (filter #(% 2))
+                       count)
+        three-times (->> count-candidates (filter #(% 3))
+                         count)]
     (* two-times three-times)))
 
 
