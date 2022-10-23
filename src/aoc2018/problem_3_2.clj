@@ -1,7 +1,6 @@
 (ns aoc2018.problem-3-2
-  (:require clojure.set)
-  (:require [aoc2018.problem-3-1 :as problem]))
-
+  (:require [aoc2018.problem-3-1 :as problem]
+            [clojure.set :refer [difference]]))
 
 (comment "
 ## 문제
@@ -25,9 +24,9 @@ https://adventofcode.com/2018/day/3
   "주어진 점들의 리스트에서 중복된 위치를 가진 점들을 수집해 리턴합니다."
   [dots]
   (as-> dots v
-        (group-by (juxt :x :y) v)
-        (for [[_ value] v :when (< 1 (count value))] value)
-        (reduce into v)))
+    (group-by (juxt :x :y) v)
+    (for [[_ value] v :when (< 1 (count value))] value)
+    (reduce into v)))
 
 (defn solve-3-2
   "https://adventofcode.com/2018/day/3 의 답을 리턴한다"
@@ -39,6 +38,6 @@ https://adventofcode.com/2018/day/3
         duplicated-dots (collect-duplicated-dots all-dots)
         duplicated-id (set (for [i duplicated-dots] (i :id)))
 
-        not-duplicated-id (clojure.set/difference all-id duplicated-id)]
+        not-duplicated-id (difference all-id duplicated-id)]
 
-    not-duplicated-id))
+    (first not-duplicated-id)))
