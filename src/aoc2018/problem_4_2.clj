@@ -1,7 +1,5 @@
 (ns aoc2018.problem-4-2
-  (:require [clojure.string :as str]
-            [clojure.java.io :as io]
-            [aoc2018.problem-4-1 :refer :all]))
+  (:require [aoc2018.problem-4-1 :refer [simplify-logs sample-input-string input-strings]]))
 
 (comment "
 ## 문제
@@ -14,7 +12,8 @@ https://adventofcode.com/2018/day/4 part2
   "frequencies 함수로 빈도를 계산한 결과를 받아 그 중 가장 높은 빈도를 가진 엔트리를 리턴합니다."
   [list]
   (let [[value frequency] (first (sort-by val > (frequencies list)))]
-    {:value value, :frequency frequency}))
+    {:value     value
+     :frequency frequency}))
 
 (comment
   (most-of [:a :a :b :b :b :c]))
@@ -22,15 +21,14 @@ https://adventofcode.com/2018/day/4 part2
 (defn solve-4-2
   "https://adventofcode.com/2018/day/4 문제를 풀이합니다."
   [raw-strings]
-  (let [
-        날짜별-로그-리스트 (simplify-logs raw-strings)
+  (let [날짜별-로그-리스트 (simplify-logs raw-strings)
         날짜별-수면-기록 (map #(assoc % :minutes (range (:sleep %) (:wake %))) 날짜별-로그-리스트)
         경비원별-수면-기록 (group-by :guard-id
                              (map #(select-keys % [:guard-id :minutes]) 날짜별-수면-기록))
         경비원별-가장-많이-잠들었던-분 (map (fn [[guard-id v]]
                                  (merge
-                                   {:guard-id guard-id}
-                                   (most-of (reduce into (map #(:minutes %) v)))))
+                                  {:guard-id guard-id}
+                                  (most-of (reduce into (map #(:minutes %) v)))))
                                경비원별-수면-기록)
         정답-대상자 (last (sort-by :frequency 경비원별-가장-많이-잠들었던-분))]
 
