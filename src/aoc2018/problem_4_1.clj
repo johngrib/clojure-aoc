@@ -57,13 +57,12 @@ https://adventofcode.com/2018/day/4
      => { :sleep 30, :wake 38, :sleeping-time 8 } ; 30분에 잠들어서, 38분에 깨어났으므로, 8분간 잠을 잤다는 내용.
   "
   [a-sleep-log]
-  (let [
-        [_ sleep-str wake-str] (re-find #"(\d+)\]\s*falls asleep\s*\[.+?(\d+)\]\s*wakes up" a-sleep-log)
+  (let [[_ sleep-str wake-str] (re-find #"(\d+)\]\s*falls asleep\s*\[.+?(\d+)\]\s*wakes up" a-sleep-log)
         sleep (Integer/parseInt sleep-str)
         wake (Integer/parseInt wake-str)]
-    {:sleep         sleep,
-     :wake          wake,
-     :sleeping-time (- wake sleep),}))
+    {:sleep         sleep
+     :wake          wake
+     :sleeping-time (- wake sleep)}))
 
 (comment
   (to-sleep-datum " [1518-11-21 00:30] falls asleep [1518-11-21 00:38] wakes up ")
@@ -72,15 +71,14 @@ https://adventofcode.com/2018/day/4
 (defn to-day-log
   "한 줄로 이루어진 하루의 로그를 분석해 map으로 생성해 리턴합니다."
   [log-string]
-  (let [
-        [_ guard-id date] (re-find #"^[^#]*?#(\d+)\s*\[(\d+-\d+-\d+)" log-string)
+  (let [[_ guard-id date] (re-find #"^[^#]*?#(\d+)\s*\[(\d+-\d+-\d+)" log-string)
         removed-guard-id (str/replace log-string #"^#\d+\s*" "")
-        split-logs (str/split-lines
-                     (str/replace removed-guard-id #"(wakes up)\s*" "$1\n"))
+        split-logs (-> removed-guard-id 
+                       (str/replace #"(wakes up)\s*" "$1\n")
+                       str/split-lines)
         sleep-data (map to-sleep-datum split-logs)]
-    (map
-      #(conj {:guard-id (Integer/parseInt guard-id), :date date} %)
-      sleep-data)))
+    (map #(conj {:guard-id (Integer/parseInt guard-id), :date date} %)
+         sleep-data)))
 
 (comment
   (to-day-log
@@ -92,15 +90,13 @@ https://adventofcode.com/2018/day/4
   "입력된 raw log를 날짜-시간 기준으로 정렬하고, 여러줄로 나뉘었던 로그를 하루 기준으로 분류한 리스트로 리턴합니다."
   [input-strings]
   (let [whole-log (str/join " " (sort input-strings))
-        split-logs (str/split-lines
-                     (str/replace whole-log
-                                  #"\[[^]]+\] Guard (#\d+) begins shift" "\n$1"))]
-    (reduce into
-            (map to-day-log
-                 (filter
-                   #(not (re-matches #"^(#\d+)?\s*" %)) split-logs)))))
-
-
+        split-logs (-> whole-log 
+                       (str/replace #"\[[^]]+\] Guard (#\d+) begins shift" "\n$1")
+                       str/split-lines)]
+    (->> split-logs
+         (filter #(not (re-matches #"^(#\d+)?\s*" %)))
+         (map to-day-log)
+         (reduce into))))
 
 (comment
   (simplify-logs sample-input-string))
@@ -112,7 +108,6 @@ https://adventofcode.com/2018/day/4
        (map #(range (:sleep %) (:wake %)))
        (reduce into)))
 
-
 (comment
   (expand-sleep-minutes
     [{:sleep 3 :wake 8}
@@ -120,14 +115,13 @@ https://adventofcode.com/2018/day/4
 
 (defn summarize-sleep-data
   [[guard-id sleep-data]]
-  {:id          guard-id,
+  {:id          guard-id
    :total-slept (apply + (map #(:sleeping-time %) sleep-data))})
 
 (defn solve-4-1
   "https://adventofcode.com/2018/day/4 문제를 풀이합니다."
   [raw-strings]
-  (let [
-        경비원-기준으로-묶은-로그데이터 (group-by :guard-id (simplify-logs raw-strings))
+  (let [경비원-기준으로-묶은-로그데이터 (group-by :guard-id (simplify-logs raw-strings))
 
         경비원별-총-수면시간 (map summarize-sleep-data 경비원-기준으로-묶은-로그데이터)
         best-잠꾸러기 (last (sort-by :total-slept 경비원별-총-수면시간))
@@ -137,14 +131,13 @@ https://adventofcode.com/2018/day/4
                                       expand-sleep-minutes
                                       frequencies
                                       (sort-by val >)
-                                      first
-                                      first)]
+                                      ffirst)]
 
-    {
-     :sleepyhead-id         best-잠꾸러기-id,
+    {:sleepyhead-id         best-잠꾸러기-id,
      :frequent-slept-minute best-잠꾸러기가-가장-많이-잠들었던-순간,
      :total-slept           (:total-slept best-잠꾸러기)
-     :solution              (* best-잠꾸러기-id best-잠꾸러기가-가장-많이-잠들었던-순간)}))
+     :solution              (* best-잠꾸러기-id
+                               best-잠꾸러기가-가장-많이-잠들었던-순간)}))
 
 ; 26281
 (solve-4-1 input-strings)
