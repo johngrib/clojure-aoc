@@ -1,6 +1,7 @@
 (ns aoc2018.problem-7-2
-  (:require [aoc2018.problem-7-1 :refer :all]
-            [clojure.string :as str]))
+  (:require [aoc2018.problem-7-1 :refer [sample-input-string input-string string->work-context]]
+            [clojure.string :as str]
+            [clojure.set :as cset]))
 
 (comment "
 - part1 문제에서는 worker가 1개였다. 그러나 part2 부터는 여러 개의 worker가 있다고 생각하고 문제를 풀자.
@@ -35,11 +36,11 @@
   (or (nil? (:time-to-finish worker))
       (nil? (:work-in-progress worker))))
 
-(comment (idle-worker? {})                                  ; true
-         (idle-worker? {:work-in-progress nil})             ; true
-         (idle-worker? {:time-to-finish 3})                 ; true
-         (idle-worker? {:work-in-progress \A})              ; false
-         (idle-worker? {:time-to-finish 3, :work-in-progress \A})) ; false
+(comment (idle-worker? {})                                  ; true ; 아무것도 지정되 않음
+         (idle-worker? {:work-in-progress nil})             ; true ; 하는 일도 없고 시간도 없음
+         (idle-worker? {:time-to-finish 3})                 ; true ; 시간은 할당되어 있으나 작업은 없음
+         (idle-worker? {:work-in-progress \A})              ; true ; 작업은 할당되어 있으나 시간이 없음
+         (idle-worker? {:time-to-finish 3, :work-in-progress \A})) ; false ; 일을 하고 있음
 
 (defn finished-worker?
   "주어진 워커가 작업이 완료된 워커라면 true를 리턴합니다."
@@ -91,7 +92,7 @@
        (map (fn [work] {work (get required-works work)}))
        (reduce into {})
        (filter (fn [[_ required]]
-                 (clojure.set/subset? required finished-works))) ; 선행 작업이 완료된 작업들만 선별한다.
+                 (cset/subset? required finished-works))) ; 선행 작업이 완료된 작업들만 선별한다.
        keys
        sort))
 
@@ -144,8 +145,7 @@
         already-in-progress? (->> workers
                                   (map #(:work-in-progress %))
                                   (filter #(= primary-work %))
-                                  empty?
-                                  not)]
+                                  seq)]
     (cond
       ; 놀고 있는 워커들이 없다면 할당을 할 수 없다.
       (empty? idle-workers) workers
@@ -210,6 +210,8 @@
           timestamp
           (recur next-time assigned-workers new-finished-works))))))
 
-(comment (solve-7-2 sample-input-string 2 1)                ; 15
-         (solve-7-2 input-string 5 61))                     ; 1105
-
+(comment
+  (solve-7-2 sample-input-string 2 1)   ; 15
+  (solve-7-2 input-string 5 61)         ; 1105
+  ;;
+  )
