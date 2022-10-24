@@ -24,7 +24,9 @@ dabCBAcaDA        No further actions can be taken.
 ")
 
 (def sample-input-string "dabAcCaCBAcCcaDA")
-(def input-string (-> "aoc2018/input5.txt" io/resource slurp))
+(def input-string (-> "aoc2018/input5.txt"
+                      io/resource
+                      slurp))
 
 (defn pair-alphabet?
   "주어진 두 알파벳이 대문자와 소문자 쌍이라면 true를 리턴합니다.
@@ -58,13 +60,15 @@ dabCBAcaDA        No further actions can be taken.
   "https://adventofcode.com/2018/day/5 문제의 답을 풀이한 결과를 리턴합니다.
   주어진 문자열을 polymer units list로 인식하여, 연쇄 반응을 시킨 결과를 리턴합니다."
   [polymer-string]
-  (let [
-        결과-문자-리스트 (reduce (react-polymer-reducer) [] polymer-string)]
+  (let [결과-문자-리스트 (reduce (react-polymer-reducer)
+                          []
+                          polymer-string)]
     (println (apply str 결과-문자-리스트))
     (count 결과-문자-리스트)))
 
 (comment
   (solve-5-1 sample-input-string)                           ; 10
   (solve-5-1 input-string)                                  ; 9686
+  ;;
   )
 
