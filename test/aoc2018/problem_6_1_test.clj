@@ -1,6 +1,6 @@
 (ns aoc2018.problem-6-1-test
-  (:require [clojure.test :refer :all])
-  (:require [aoc2018.problem-6-1 :refer :all]))
+  (:require [clojure.test :refer [deftest testing are is run-tests]]
+            [aoc2018.problem-6-1 :refer [absolute manhattan-distance solve-6-1 sample-input-string input-string]]))
 
 (deftest desc:absolute
   (testing
@@ -20,11 +20,13 @@
 
 (deftest desc:solve-6-1
   (testing
-    "예제 입력을 제공하면 예제 정답을 리턴한다."
-    (is (= 17 (solve-6-1 sample-input-string)))
-    (testing
-      "문제의 입력을 제공하면 정답을 리턴한다."
-      (is (= 5187 (solve-6-1 input-string))))))
+   "예제 입력을 제공하면 예제 정답을 리턴한다."
+    (is (= 17 (solve-6-1 sample-input-string))))
+  (testing
+   "문제의 입력을 제공하면 정답을 리턴한다."
+    (is (= 5187 (solve-6-1 input-string)))))
 
 (comment
-  (run-tests))
+  (run-tests)
+  ;;
+  )

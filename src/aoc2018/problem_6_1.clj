@@ -22,7 +22,8 @@ https://adventofcode.com/2018/day/6 part1
   "두 점 사이의 맨하튼 거리(정수)를 리턴합니다."
   [dot1 dot2]
   (let [delta (merge-with - dot1 dot2)]
-    (+ (absolute (:x delta)) (absolute (:y delta)))))
+    (+ (absolute (:x delta))
+       (absolute (:y delta)))))
 
 (comment
   (manhattan-distance {:x 1 :y 0} {:x 1 :y 1})              ; 1
@@ -43,8 +44,7 @@ https://adventofcode.com/2018/day/6 part1
 (defn a-dot->game-data
   "점 하나를 체크하여, 업데이트된 게임 데이터를 리턴합니다."
   [dot game-data]
-  (let [
-        manhattan-거리들 (->> (:king-dot-list game-data)
+  (let [manhattan-거리들 (->> (:king-dot-list game-data)
                            (map (fn [king-dot] {:dot      king-dot
                                                 :distance (manhattan-distance dot king-dot)}))
                            (sort-by :distance <))
@@ -54,20 +54,22 @@ https://adventofcode.com/2018/day/6 part1
         closest-king이-또-있다? (->> manhattan-거리들
                                  (filter #(= (:distance closest-king) (:distance %)))
                                  (filter #(not (= closest-king-좌표 (:dot %))))
-                                 empty?
-                                 not)
+                                 seq)
 
         넓이-저장소 (:area-of-each-kings game-data)]
     (cond
-      ; closest 군주-점들이 또 있다면 이 점은 누구의 소유도 아니다. game-data에 아무것도 추가하지 않고 리턴한다.
+      ; closest 군주-점들이 또 있다면 이 점은 누구의 소유도 아니다.
+      ; game-data에 아무것도 추가하지 않고 리턴한다.
       closest-king이-또-있다?
       game-data
 
-      ; 이 점이 경계에 있다면, 이 점과 가장 가까운 군주-점은 무한한 영토를 갖는다는 뜻이다. 무한영토 군주 정보에 해당 군주-점을 등록한다.
+      ; 이 점이 경계에 있다면, 이 점과 가장 가까운 군주-점은 무한한 영토를 갖는다는 뜻이다.
+      ; 무한영토 군주 정보에 해당 군주-점을 등록한다.
       ((:dot-on-border? game-data) dot)
       (assoc game-data :no-limit-kings (merge (:no-limit-kings game-data) closest-king-좌표))
 
-      ; 이 점은 가장 가까운 군주-점의 영토가 된다. 해당 군주-점의 영토 넓이에 +1 한다.
+      ; 이 점은 가장 가까운 군주-점의 영토가 된다.
+      ; 해당 군주-점의 영토 넓이에 +1 한다.
       (넓이-저장소 closest-king-좌표)
       (let [가장-가까운-군주-점의-영토-넓이 (get (:area-of-each-kings game-data) closest-king-좌표)]
         (assoc game-data
@@ -98,8 +100,7 @@ https://adventofcode.com/2018/day/6 part1
   "https://adventofcode.com/2018/day/6 문제 part1 을 풀이합니다.
   가장 큰 유한한 영토의 넓이를 리턴합니다."
   [input-string]
-  (let [
-        king-dots (input->dots input-string)
+  (let [king-dots (input->dots input-string)
 
         min-x (select min :x king-dots)
         max-x (select max :x king-dots)
@@ -127,5 +128,8 @@ https://adventofcode.com/2018/day/6 part1
 (def sample-input-string "1,1  1,6  8,3  3,4  5,5  8,9")
 (def input-string (-> "aoc2018/input6.txt" io/resource slurp))
 
-(solve-6-1 sample-input-string)                             ; 17
-(solve-6-1 input-string)                                    ; 5187
+(comment
+  (solve-6-1 sample-input-string)   ; 17
+  (solve-6-1 input-string)          ; 5187
+  ;;
+  )
