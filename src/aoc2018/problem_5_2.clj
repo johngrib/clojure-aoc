@@ -1,5 +1,5 @@
 (ns aoc2018.problem-5-2
-  (:require [aoc2018.problem-5-1 :refer :all]))
+  (:require [aoc2018.problem-5-1 :refer [react-polymer-reducer sample-input-string input-string]]))
 
 (comment "
 https://adventofcode.com/2018/day/5 part2
@@ -27,21 +27,20 @@ dabCBAcaDA        No further actions can be taken.
   "https://adventofcode.com/2018/day/5 문제의 답을 풀이한 결과를 리턴합니다.
   주어진 문자열을 polymer units list로 인식하여, 연쇄 반응을 시킨 결과를 리턴합니다."
   [polymer-string]
-  (let [
-        입력-문자리스트 (lazy-seq polymer-string)
+  (let [입력-문자리스트 (lazy-seq polymer-string)
         무시할-대소문자pair-리스트 (->> (range 65 91)
                               (map (fn [num] #{(char num) (char (+ num 32))})))
         반응함수-리스트 (map #(react-polymer-reducer %) 무시할-대소문자pair-리스트)
         결과-문자리스트 (->> 반응함수-리스트
                       (map #(reduce % [] 입력-문자리스트))
                       (sort-by count))
-        정답-후보-문자리스트 (first 결과-문자리스트)
-        ]
-    {:size   (count 정답-후보-문자리스트),
+        정답-후보-문자리스트 (first 결과-문자리스트)]
+    {:size   (count 정답-후보-문자리스트)
      :string (apply str 정답-후보-문자리스트)}))
 
 (comment
   (solve-5-2 sample-input-string)                           ; 4
   (solve-5-2 input-string)                                  ; 5524
+  ;;
   )
 
