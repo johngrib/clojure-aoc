@@ -1,7 +1,6 @@
 (ns aoc2018.problem-7-1
   (:require [clojure.java.io :as io]
-            [clojure.set :as cset]
-            ))
+            [clojure.set :as cset]))
 
 (comment "
 https://adventofcode.com/2018/day/7 문제 part1
@@ -58,8 +57,7 @@ C 부터 시작해서 E 까지 작업을 완료하는 단계를 문자열로 표
 (defn string->work-context
   "문제의 입력을 읽고 작업에 필요한 컨텍스트 데이터를 생성해 리턴합니다."
   [input-string]
-  (let [
-        입력-list (->> input-string
+  (let [입력-list (->> input-string
                      (re-seq #"Step ([A-Z]) must .+? before step ([A-Z]) can begin.")
                      (map rest)
                      (map #(seq (apply str %))))
@@ -118,8 +116,7 @@ C 부터 시작해서 E 까지 작업을 완료하는 단계를 문자열로 표
   [remain-work-list work-context finished-set route]
   (if (empty? remain-work-list)
     route
-    (let [
-          다음에-가능한-작업-list (next-available-works
+    (let [다음에-가능한-작업-list (next-available-works
                             remain-work-list
                             finished-set
                             (:required-works work-context))
@@ -144,8 +141,7 @@ C 부터 시작해서 E 까지 작업을 완료하는 단계를 문자열로 표
 
 (comment
   (solve-7-1 sample-input-string)                           ; CABDFE
-  (solve-7-1 input-string))                                  ; GLMVWXZDKOUCEJRHFAPITSBQNY
-
-(comment
-  (string->work-context sample-input-string))
-
+  (solve-7-1 input-string)                                  ; GLMVWXZDKOUCEJRHFAPITSBQNY
+  (string->work-context sample-input-string)
+  ;;
+  )

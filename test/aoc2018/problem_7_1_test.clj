@@ -1,6 +1,6 @@
 (ns aoc2018.problem-7-1-test
-  (:require [clojure.test :refer :all])
-  (:require [aoc2018.problem-7-1 :refer :all]))
+  (:require [aoc2018.problem-7-1 :refer [string->work-context sample-input-string input-string solve-7-1]]
+            [clojure.test :refer [deftest testing is run-tests]]))
 
 (deftest desc:string->work-context
   (testing "string->work-context 함수는 입력을 분석해 문제 해결에 필요한 정보를 생성해 리턴한다."
