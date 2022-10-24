@@ -1,5 +1,5 @@
 (ns aoc2018.problem-6-2
-  (:require [aoc2018.problem-6-1 :refer :all]))
+  (:require [aoc2018.problem-6-1 :refer [manhattan-distance input->dots select sample-input-string input-string]]))
 
 (comment "
 https://adventofcode.com/2018/day/6 문제의 part2.
@@ -37,10 +37,12 @@ N = 10000 일 때 모든 안전한 점의 수를 구하여라.
         y-좌표들 (range min-y (+ 1 max-y))
 
         game-모든-점들 (for [y y-좌표들, x x-좌표들] {:x x, :y y})]
-    (count
-      (filter #(safe-dot? % king-dots safe-limit) game-모든-점들))))
+    (->> game-모든-점들
+         (filter #(safe-dot? % king-dots safe-limit))
+         count)))
 
 (comment
   (solve-6-2 sample-input-string 32)                        ; 16
   (solve-6-2 input-string 10000)                            ; 34829
+  ;;
   )
