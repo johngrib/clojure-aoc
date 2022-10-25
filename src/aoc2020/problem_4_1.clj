@@ -23,19 +23,24 @@ cid 는 필수 필드가 아니다. 나머지 7개 필드가 모두 있다면 �
 주어진 문자열을 읽고 유효한 여권의 수를 찾는 것이 문제이다.
 ")
 
-(def sample-input-string (-> "aoc2020/input4-sample.txt" io/resource slurp))
-(def input-string (-> "aoc2020/input4.txt" io/resource slurp))
+(def sample-input-string (-> "aoc2020/input4-sample.txt"
+                             io/resource
+                             slurp))
+(def input-string (-> "aoc2020/input4.txt"
+                      io/resource
+                      slurp))
 
-(defn hgt-to-height
+(defn hgt:string->height:map
   "여권의 키 정보를 map으로 만들어 리턴해줍니다.
   예) 160cm => {:height 160, :unit 'cm'}"
-  [hgt-string]
-  (let [[_ height unit] (re-find #"^(\d+)(in|cm)?$" hgt-string)]
-    {:height (Integer/parseInt height), :unit unit}))
+  [hgt:string]
+  (let [[_ height unit] (re-find #"^(\d+)(in|cm)?$" hgt:string)]
+    {:height (parse-long height)
+     :unit   unit}))
 
 (comment
-  (hgt-to-height "160cm")
-  (hgt-to-height "50in"))
+  (hgt:string->height:map "160cm")
+  (hgt:string->height:map "50in"))
 
 
 (defn string->passport
@@ -44,17 +49,17 @@ cid 는 필수 필드가 아니다. 나머지 7개 필드가 모두 있다면 �
   (->> passport-string
        (re-seq #"([^\s\n]+):([^\s\n]+)")
        (map (fn [[_ k v]] {(keyword k) v}))
-       (into {}))) ; (into {})
+       (into {})))
 
 (comment
   (string->passport "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd\nbyr:1937 iyr:2017 cid:147 hgt:183cm"))
 
-(def required-passport-keywords #{:ecl :pid :eyr :hcl :byr :iyr :hgt})
-
-(defn valid-passport?
-  "유효한 여권이라면 true, 그렇지 않은 여권이라면 false를 리턴합니다."
-  [passport]
-  (set/subset? required-passport-keywords (set (keys passport))))
+(let [required-passport-keywords #{:ecl :pid :eyr :hcl :byr :iyr :hgt}]
+  (defn valid-passport?
+    "유효한 여권이라면 true, 그렇지 않은 여권이라면 false를 리턴합니다."
+    [passport]
+    (set/subset? required-passport-keywords
+                 (set (keys passport)))))
 
 (comment
   ; true
@@ -71,9 +76,10 @@ cid 는 필수 필드가 아니다. 나머지 7개 필드가 모두 있다면 �
   여러 개의 여권 정보를 표현하는 문자열을 받아, 적합한 여권이 몇 개인지를 세어 리턴합니다."
   [input-string]
   (let [list-of-passport-strings (str/split input-string #"\n\n+")
-        passports (map string->passport list-of-passport-strings)]
+        passports (map string->passport
+                       list-of-passport-strings)]
     (->> passports
-         (map valid-passport?)  ; filter
+         (map valid-passport?)
          (filter true?)
          count)))
 
