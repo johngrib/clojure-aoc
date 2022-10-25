@@ -1,6 +1,5 @@
 (ns aoc2020.problem-4-2
-  (:require [aoc2020.problem-4-1 :refer :all]
-            [clojure.spec.alpha :as s]
+  (:require [aoc2020.problem-4-1 :refer [string->passport sample-input-string input-string]]
             [clojure.string :as str]))
 
 (comment "
@@ -42,7 +41,7 @@ part1 문제에 추가로 각 필드별 유효조건이 붙었다.
   (let [[_ height unit] (re-find #"^(\d+)(in|cm)?$" hgt-string)]
     (if (or (nil? height) (nil? unit))                      ; (and height unit)
       false
-      (let [size (Integer/parseInt height)]
+      (let [size (parse-long height)]
         (case unit
           "cm" (<= 150 size 193)
           "in" (<= 59 size 76))))))
@@ -57,13 +56,13 @@ part1 문제에 추가로 각 필드별 유효조건이 붙었다.
   {
    :byr [some?
          number-string?
-         #(<= 1920 (Integer/parseInt %) 2002)]
+         #(<= 1920 (parse-long %) 2002)]
    :iyr [some?
          number-string?
-         #(<= 2010 (Integer/parseInt %) 2020)]
+         #(<= 2010 (parse-long %) 2020)]
    :eyr [some?
          number-string?
-         #(<= 2020 (Integer/parseInt %) 2030)]
+         #(<= 2020 (parse-long %) 2030)]
    :hgt [some?
          valid-height?]
    :hcl [some?
@@ -102,6 +101,7 @@ part1 문제에 추가로 각 필드별 유효조건이 붙었다.
   (validate-passport {:iyr "2013", :ecl "amb", :cid "350", :eyr "2023", :pid "028048884", :hcl "#cfa07d", :byr "1929"})
   (validate-passport {:hcl "#ae17e1", :iyr "2013", :eyr "2024", :ecl "brn", :pid "760753108", :byr "1931", :hgt "179cm"})
   (validate-passport {:hcl "#cfa07d", :eyr "2025", :pid "166559648", :iyr "2011", :ecl "brn", :hgt "59in"})
+  ;;
   )
 
 (defn solve-4-2
@@ -121,4 +121,5 @@ part1 문제에 추가로 각 필드별 유효조건이 붙었다.
   (solve-4-2 valid-strings)                                 ; 4
   (solve-4-2 sample-input-string)                           ; 2
   (solve-4-2 input-string)                                  ; 184
+  ;;
   )
