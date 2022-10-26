@@ -7,7 +7,8 @@ https://adventofcode.com/2020/day/8  part 1
 중복 명령이 실행되기 직전의 acc 값을 출력하세요.
 ")
 
-(defn file->string [file-address]
+(defn file->string
+  [file-address]
   (-> file-address
       io/resource
       slurp))
@@ -37,7 +38,7 @@ https://adventofcode.com/2020/day/8  part 1
        (re-seq #"(\S+) +([\+\-]\d+)")
        (map-indexed (fn [index [_ operation arg-number]]
                       (let [op (keyword operation)
-                            number (Integer/parseInt arg-number)]
+                            number (parse-long arg-number)]
                         {:id         index
                          :op         op
                          :arg-number number})))))
@@ -45,14 +46,12 @@ https://adventofcode.com/2020/day/8  part 1
 (defn run-operation-list
   "https://adventofcode.com/2020/day/8 part1 문제를 풀이해 결과를 리턴합니다."
   [operation-list]
-  (loop [
-         명령-list operation-list
+  (loop [명령-list operation-list
          누산기 0
          프로그램-카운터 0
          실행완료된-명령-집합 #{}
          실행-log []]
-    (let [
-          실행할-명령 (nth 명령-list 프로그램-카운터)
+    (let [실행할-명령 (nth 명령-list 프로그램-카운터)
 
           {명령-id      :id
            명령-command :op
@@ -95,5 +94,8 @@ https://adventofcode.com/2020/day/8  part 1
   [input-string]
   (run-operation-list (strings->codes input-string)))
 
-(solve-8-1 input-strings)                                   ; 2025
-(solve-8-1 sample-input-strings)                            ;  5
+(comment
+  (solve-8-1 sample-input-strings)                            ;  5
+  (solve-8-1 input-strings)                                   ; 2025
+  ;;
+  )

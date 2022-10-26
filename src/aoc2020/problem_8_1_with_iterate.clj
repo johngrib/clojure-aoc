@@ -1,5 +1,5 @@
 (ns aoc2020.problem-8-1-with-iterate
-  (:require [aoc2020.problem-8-1 :refer :all]))
+  (:require [aoc2020.problem-8-1 :refer [operation-functions strings->codes input-strings sample-input-strings]]))
 
 (comment "
 https://adventofcode.com/2020/day/8  part 1
@@ -28,8 +28,7 @@ https://adventofcode.com/2020/day/8  part 1
          갱신된-누산기     :accumulator} (실행할-함수 인자-number accumulator)
 
         갱신된-프로그램-카운터 (+ pointer result-jump)]
-    {
-     :operations  operations
+    {:operations  operations
      :executed    (conj executed 명령-id)
      :execute-log (conj execute-log 실행할-명령)
      :accumulator 갱신된-누산기
@@ -53,15 +52,17 @@ https://adventofcode.com/2020/day/8  part 1
 (defn solve-8-1-with-iterate
   "https://adventofcode.com/2020/day/8 part1 문제를 풀이해 결과를 리턴합니다."
   [input-string]
-  (let [context {
-                 :operations  (strings->codes input-string)
+  (let [context {:operations  (strings->codes input-string)
                  :accumulator 0
                  :pointer     0
                  :executed    #{}
                  :execute-log []}]
     (last
-      (take-while until-error?
-                  (iterate execute-code context)))))
+     (take-while until-error?
+                 (iterate execute-code context)))))
 
-(solve-8-1-with-iterate input-strings)                      ; 2025
-(solve-8-1-with-iterate sample-input-strings)               ;  5
+(comment
+  (solve-8-1-with-iterate sample-input-strings)               ;  5
+  (solve-8-1-with-iterate input-strings)                      ; 2025
+  ;;
+  )
