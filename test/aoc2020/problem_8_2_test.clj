@@ -1,5 +1,5 @@
 (ns aoc2020.problem-8-2-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest testing is run-tests]]
             [aoc2020.problem-8-1 :refer [sample-input-strings
                                          input-strings]]
             [aoc2020.problem-8-2 :refer [solve-8-2]]))
@@ -11,4 +11,6 @@
     (is (= 2001 (:accumulator (solve-8-2 input-strings))))))
 
 (comment
-  (run-tests))
+  (run-tests)
+  ;;
+  )

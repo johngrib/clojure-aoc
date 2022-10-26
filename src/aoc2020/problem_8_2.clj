@@ -1,7 +1,7 @@
 (ns aoc2020.problem-8-2
-  (:require [clojure.java.io :as io]
-            [clojure.string :as str]
-            [aoc2020.problem-8-1 :refer :all]))
+  (:require [aoc2020.problem-8-1 :refer [strings->codes run-operation-list sample-input-strings input-strings]]
+            [clojure.java.io :as io]
+            [clojure.string :as str]))
 
 (comment "
 https://adventofcode.com/2020/day/8  part 2
@@ -17,8 +17,7 @@ https://adventofcode.com/2020/day/8  part 2
   명령 리스트를 입력받아, 하나의 op code를 변경합니다."
   [swap-dictionary]
   (fn [operation-id operation-list]
-    (let [
-          head (take operation-id operation-list)
+    (let [head (take operation-id operation-list)
           target (nth operation-list operation-id)
           target-op (:op target)
           to-op (get swap-dictionary target-op)
@@ -34,7 +33,8 @@ https://adventofcode.com/2020/day/8  part 2
    [{:id 0, :op :nop, :arg-number 0}
     {:id 1, :op :nop, :arg-number 0}]))
 
-(defn solve-8-2 [input-string]
+(defn solve-8-2
+  [input-string]
   (let [명령-list (strings->codes input-string)
         명령교체-후보-list (->> 명령-list
                           (filter #((:op %) #{:nop :jmp}))
@@ -55,5 +55,8 @@ https://adventofcode.com/2020/day/8  part 2
             (merge 실행결과 {:swap-id        swap-대상
                          :swap-operation (nth swap된-명령-list swap-대상)})))))))
 
-(solve-8-2 sample-input-strings)                            ; 8
-(solve-8-2 input-strings)                                   ; 2001
+(comment
+  (solve-8-2 sample-input-strings)                            ; 8
+  (solve-8-2 input-strings)                                   ; 2001
+  ;;
+  )
