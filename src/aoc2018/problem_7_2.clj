@@ -1,7 +1,7 @@
 (ns aoc2018.problem-7-2
   (:require [aoc2018.problem-7-1 :refer [sample-input-string input-string string->work-context]]
-            [clojure.string :as str]
-            [clojure.set :as cset]))
+            [clojure.set :as cset]
+            [clojure.string :as str]))
 
 (comment "
 - part1 문제에서는 worker가 1개였다. 그러나 part2 부터는 여러 개의 worker가 있다고 생각하고 문제를 풀자.
