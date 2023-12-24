@@ -34,5 +34,6 @@
        (map (fn [[a b]] (Integer/parseInt (str a b))))
        ;; 합계를 구한다
        (apply +))
+  ;; 54304
   ;;
   )
