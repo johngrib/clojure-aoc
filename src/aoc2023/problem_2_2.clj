@@ -2,8 +2,10 @@
   (:require [aoc2023.problem-2-1 :as part1]))
 
 (comment
-  "이번에는 각 Game의 각 큐브들의 최대값들의 곱을 구한다.
-  
+  "
+  https://adventofcode.com/2023/day/2#part2
+  이번에는 각 Game의 각 큐브들의 최대값들의 곱을 구한다.
+
   (예제)
   Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
   Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
