@@ -40,13 +40,13 @@
     {:game    (parse-long game-number)
      :win     wins
      :mine    mine
-     :matched matched}))
+     :matched matched
+     :matched-count (count matched)}))
 
 (defn solve [input-lines]
   (->> input-lines
        (map parse-line)
-       (map :matched)
-       (map count)
+       (map :matched-count)
        (filter #(> % 0))
        (map #(Math/pow 2 (dec %)))
        (apply +)))
