@@ -1,6 +1,17 @@
 (ns aoc2023.problem-3-2
   (:require [aoc2023.problem-3-1 :as part1]))
 
+(comment
+  " https://adventofcode.com/2023/day/3#part2
+
+  Part 2에서는 gear ratio라는 새로운 용어를 정의한다.
+
+  주위에 2개의 숫자만 있는 * 기호를 찾는다.
+  그 두 개의 숫자를 곱한 값이 gear ratio 이다.
+
+  모든 gear ratio의 총합은 얼마인가?
+  ")
+
 (defn part->gear-ratio
   [{fence :fence}]
   (if (= 2 (count fence))
